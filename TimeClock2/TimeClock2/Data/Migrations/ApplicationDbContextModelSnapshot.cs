@@ -200,6 +200,9 @@ namespace TimeClock2.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("date");
 
+                    b.Property<string>("Reason")
+                        .IsRequired();
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("date");
 
@@ -207,7 +210,11 @@ namespace TimeClock2.Data.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Vacations");
                 });
@@ -255,6 +262,13 @@ namespace TimeClock2.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TimeClock2.Models.Vacation", b =>
+                {
+                    b.HasOne("TimeClock2.Models.ApplicationUser", "User")
+                        .WithMany("Vacations")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
