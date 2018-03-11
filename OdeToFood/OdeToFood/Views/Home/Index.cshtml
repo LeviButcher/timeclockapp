@@ -1,24 +1,20 @@
-﻿@model OdeToFood.ViewModels.HomeIndexViewModel
+﻿@model HomeIndexViewModel
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-<table>
-    <h1>@Model.CurrentMessage</h1>
-    @foreach (var restaurant in Model.Restaurants)
-    {
-        <tr>
-            <td>@restaurant.Id</td>
-            <td>@restaurant.Name</td>
-            <td>
-                <a asp-action="Details" asp-route-id="@restaurant.Id">More</a>
-            </td>
-        </tr>
-    }
+@{
+    ViewBag.Title = "Home page";
+}
 
-</table>
-<a asp-action="Create">Add Restaurant</a>
-</body>
-</html>
+
+<h1>All Restaurants</h1>
+
+@foreach (var restaurant in Model.Restaurants)
+{
+    @Html.Partial("_Summary", restaurant);
+}
+
+   
+
+<div>
+    <a asp-action="Create">Add Restaurant</a>
+</div>
+

@@ -1,0 +1,20 @@
+﻿@page
+@model OdeToFood.Pages.HomeModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h2>All Restaurants</h2>
+<table>
+    @{
+        foreach (var restaurant in Model.Restaurants)
+        {
+            <tr>
+                <td>@restaurant.Id</td>
+                <td>@restaurant.Name</td>
+
+            </tr>
+        }
+    }
+</table>
+
