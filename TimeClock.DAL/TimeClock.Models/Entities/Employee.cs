@@ -12,10 +12,12 @@ namespace TimeClock.Models.Entities
     {
         [Required]
         [MaxLength(50)]
+        [DataType(DataType.Text)]
         public string FirstName { get; set; }
 
         [Required]
         [MaxLength(50)]
+        [DataType(DataType.Text)]
         public string LastName { get; set; }
 
         //Default to true
@@ -30,6 +32,10 @@ namespace TimeClock.Models.Entities
 
         //Start Navigation and keys
 
+        [InverseProperty(nameof(Vacation.Employee))]
         public List<Vacation> Vacations { get; set; }
+
+        [InverseProperty(nameof(TimeSheet.Employee))]
+        public List<TimeSheet> TimeSheets { get; set; }
     }
 }

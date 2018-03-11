@@ -7,7 +7,7 @@ using TimeClock.Models.Entities.Base;
 
 namespace TimeClock.Models.Entities
 {
-    [Table("Vacation", Schema = "Clock")]
+    [Table("Vacations", Schema = "Clock")]
     public class Vacation : EntityBase
     {
         [Required]

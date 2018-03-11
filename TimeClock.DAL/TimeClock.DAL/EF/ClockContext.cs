@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 using TimeClock.Models.Entities;
 
 namespace TimeClock.DAL.EF
 {
-    public class ClockContext : IdentityDbContext<Employee>
+    public class ClockContext : IdentityDbContext<Employee, IdentityRole, string>
     {
         public ClockContext()
         {
@@ -13,7 +15,15 @@ namespace TimeClock.DAL.EF
 
         public ClockContext(DbContextOptions options) : base(options)
         {
-
+            try
+            {
+                Database.Migrate();
+            }
+            catch(Exception)
+            {
+                //Do something here
+            }
+            
         }
         
 
@@ -29,6 +39,7 @@ namespace TimeClock.DAL.EF
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //Fluent API Here
+            base.OnModelCreating(builder);
 
             //Set Active Default Value
             builder.Entity<Employee>()
@@ -39,10 +50,21 @@ namespace TimeClock.DAL.EF
                 .Property(e => e.DateCreated)
                 .HasColumnType("datetime")
                 .HasDefaultValueSql("getdate()");
+
+            builder.Entity<TimeSheet>()
+                .Property(e => e.StartDate)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("getdate()");
+
+            builder.Entity<ClockIn>()
+                .Property(e => e.ClockInTime)
+                .HasDefaultValueSql("getdate()");
+
         }
 
         DbSet<Employee> Employees { get; set; }
         DbSet<Vacation> Vacations { get; set; }
-
+        DbSet<TimeSheet> TimeSheets { get; set; }
+        DbSet<ClockIn> ClockIns { get; set; }
     }
 }

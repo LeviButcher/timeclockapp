@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Initializer\" />
-    <Folder Include="Repos\" />
   </ItemGroup>
 
   <ItemGroup>
