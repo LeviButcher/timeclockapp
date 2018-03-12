@@ -5,7 +5,7 @@ namespace OdeToFood.ViewComponents
 {
     public class GreeterViewComponent : ViewComponent
     {
-        private IGreeter _greeter;
+        private readonly IGreeter _greeter;
 
         public GreeterViewComponent(IGreeter greeter)
         {

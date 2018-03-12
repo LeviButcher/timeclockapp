@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -40,6 +41,7 @@ namespace OdeToFood
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             
             app.UseStaticFiles();
 
@@ -47,7 +49,6 @@ namespace OdeToFood
 
             app.Run(async (context) =>
             {
-                var greeting = greeter.GetMessageOfTheDay();
                 await context.Response.WriteAsync($"Not Found");
             });
         }
