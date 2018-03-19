@@ -1,0 +1,44 @@
+﻿@model ClockInViewModel
+
+@{
+    ViewData["Title"] = "ClockIn";
+}
+
+<h2>Clock In</h2>
+
+<h4>@ViewBag.Info</h4>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" asp-controller="ClockIn" asp-action="ClockIn">
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" class="form-control" readonly="readonly" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @if (Model.CurrentlyClockedIn)
+                {
+                    <h2>You are currently clocked in, Clock Out</h2>
+                    <input type="submit" name="Submit" value="Clock Out" asp-route-In="@false" class="btn btn-danger" } />
+
+                }
+                else
+                {
+                    @Model.CurrentlyClockedIn
+                    <h2>You are not currently clocked in, Clock In</h2>
+                    <input type="submit" name="Submit" value="Clock In" asp-route-In="@true" class="btn btn-primary" } />
+                }
+            </div>
+            @Html.HiddenFor(x => x.TimeSheetId)
+            @Html.HiddenFor(x => x.UserId)
+            @Html.HiddenFor(x => x.CurrentlyClockedIn)
+        </form>
+    </div>
+</div>
+
+
+
+

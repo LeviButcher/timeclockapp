@@ -1,0 +1,75 @@
+﻿@model IEnumerable<SupervisorDetailTimeSheetViewModel>
+
+@{
+    ViewData["Title"] = "SupervisorsAllTimeSheets";
+}
+
+<h2>SupervisorsAllTimeSheets</h2>
+
+<p>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.User)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Approved)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReasonDenied)
+                </th>
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.ExemptFromOvertime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AmountMade)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeWorked)
+                </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Approved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReasonDenied)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExemptFromOvertime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountMade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeWorked)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "DetailTimeSheet", new {  id=item.TimesheetId  }, new {@class = "btn btn-warning"})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

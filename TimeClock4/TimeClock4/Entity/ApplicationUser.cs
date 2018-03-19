@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TimeClock4.Entity
 {
@@ -20,8 +18,26 @@ namespace TimeClock4.Entity
         [DataType(DataType.Text)]
         public string LastName { get; set; }
 
+        [Required]  
+        [DefaultValue(false)]
+        public bool ExemptFromOvertime { get; set; }
+
+        [Required]
+        [DataType(DataType.Currency)]
+        public double HourlyWage { get; set; }
+
         [InverseProperty(nameof(Vacation.User))]
         public List<Vacation> Vacations { get; set; }
 
+        public string SupervisorId { get; set; }
+
+        [ForeignKey(nameof(SupervisorId))]
+        public ApplicationUser Supervisor { get; set; }
+
+        [InverseProperty(nameof(ApplicationUser.Supervisor))]
+        public List<ApplicationUser> Employees { get; set; }
+
+        [InverseProperty(nameof(TimeSheet.User))]
+        public List<TimeSheet> TimeSheets { get; set; }
     }
 }

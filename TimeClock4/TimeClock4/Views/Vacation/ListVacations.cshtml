@@ -1,0 +1,88 @@
+﻿@model IEnumerable<DetailVacationViewModel>
+
+@{
+    ViewData["Title"] = ViewData["Header"];
+}
+
+<h2>@ViewData["Header"]</h2>
+
+<p>
+    <a asp-action="Index" class="btn btn-primary">Back</a>
+</p>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RequestBy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateCreate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reason)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Approval)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Supervisor)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reason)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Approval)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supervisor)
+                </td>
+                <td>
+                    @if (User.IsInRole("Supervisor"))
+                    {
+                        
+                        @Html.ActionLink("Make Decision", "ApproveOrDenyVacation", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Details", "DetailVacation", new { id = item.Id }, new { @class = "btn btn-primary"})
+                    }
+                    
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <h4 style="padding-top: 50px" >0 vacations for @ViewData["Header"]</h4>
+}
+
+

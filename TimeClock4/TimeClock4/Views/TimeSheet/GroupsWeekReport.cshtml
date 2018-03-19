@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TimeClock4.ViewModels.TimeSheetViewModels.GroupWeekReportViewModel>
+
+@{
+    ViewData["Title"] = "GroupsWeekReport";
+}
+
+<h2>Groups Week Report</h2>
+<a asp-action="AllWeeklyReport" class="btn btn-primary">Go Back</a>
+<p>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Supervisor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalEarning)
+                </th>
+            <th>
+                Links
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supervisor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalEarning)
+            </td>
+            <td>
+               @Html.HiddenFor(modelItem => item.SupervisorId)
+                <a asp-action="GroupsTimeCards" asp-route-endDate="@item.EndDate"
+                   asp-route-startDate="@item.StartDate" asp-route-supervisorId="@item.SupervisorId"
+                   class="btn btn-primary">View Groups TimeCards</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

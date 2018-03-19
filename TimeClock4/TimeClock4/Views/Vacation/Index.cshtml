@@ -1,5 +1,16 @@
-﻿@{ 
+﻿
+@{
     ViewData["Title"] = "Vacation";
 }
-
 <h1>Vacations</h1>
+<a asp-action="CreateVacation" class="btn btn-primary">Request a Vacation</a>
+<a asp-action="WaitingForApprovalVacations" class="btn btn-primary">All Vacation Waiting for Approval</a>
+<a asp-action="UpcomingApprovedVacation" class="btn btn-primary">Upcoming Approved Vacations</a>
+
+
+@if (User.IsInRole("Supervisor"))
+{
+    <hr />
+    <h1>Supervisor Actions</h1>
+    <a asp-action="ListVacationsWaitingForApproval" class="btn btn-danger">Approve or Deny Vacations</a>
+}

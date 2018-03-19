@@ -1,0 +1,53 @@
+﻿@model DetailVacationViewModel
+
+@{
+    ViewData["Title"] = "DetailVacation";
+}
+
+<h2>Detail of Vacation</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateCreate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Reason)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Reason)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Approval)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Approval)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Supervisor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Supervisor)
+        </dd>
+    </dl>
+</div>
+<div>
+    @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>

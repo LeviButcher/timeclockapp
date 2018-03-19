@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TimeClock4.ViewModels.TimeSheetViewModels.WeeklyReportViewModel>
+
+@{
+    ViewData["Title"] = "AllWeeklyReport";
+}
+
+<h2>AllWeeklyReport</h2>
+<a asp-action="Index" class="btn btn-primary">Go back</a>
+<p>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalEarning)
+                </th>
+            <th>
+                Links
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalEarning)
+            </td>
+            <td>
+                @Html.ActionLink("View Groups Earnings for week", "GroupsWeekReport", new { startDate = item.StartDate, endDate = item.EndDate }, new{@class = "btn btn-primary"})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

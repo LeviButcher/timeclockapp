@@ -12,9 +12,10 @@ using TimeClock4.Entity;
 namespace TimeClock4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180315235857_ChangeHourlyWageToDouble")]
+    partial class ChangeHourlyWageToDouble
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

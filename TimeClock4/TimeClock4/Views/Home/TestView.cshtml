@@ -1,0 +1,66 @@
+﻿@model TimeClock4.ViewModels.TimeSheetViewModels.TimeSheetDetailViewModel
+
+@{
+    ViewData["Title"] = "testVeiw";
+}
+
+<h2>testVeiw</h2>
+
+<div>
+    <h4>TimeSheetDetailViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TimesheetId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TimesheetId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Approved)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Approved)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReasonDenied)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReasonDenied)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ExemptFromOvertime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ExemptFromOvertime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountMade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AmountMade)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeWorked)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TimeWorked)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

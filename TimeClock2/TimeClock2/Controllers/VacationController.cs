@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using TimeClock2.Models;
 using TimeClock2.Repos.IRepos;
 using TimeClock2.ViewModels;
-using Microsoft.AspNet.Identity;
 
 namespace TimeClock2.Controllers
 {
@@ -34,7 +33,6 @@ namespace TimeClock2.Controllers
             {
                 StartDate = vacation.StartDate,
                 EndDate = vacation.EndDate,
-                UserId = User.Identity.GetUserId()
             };
 
             _repo.Add(newVacation);

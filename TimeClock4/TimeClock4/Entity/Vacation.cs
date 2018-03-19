@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 using TimeClock4.Entity.Base;
 
 namespace TimeClock4.Entity
 {
     public class Vacation : EntityBase
     {
-        [Required]
-        [DataType(DataType.Date)]
+        [Required] [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
+        [Required] [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
 
         [DataType(DataType.Date)]
@@ -33,6 +29,8 @@ namespace TimeClock4.Entity
         [ForeignKey(nameof(UserId))]
         public ApplicationUser User { get; set; }
 
-
+        [Required]
+        [DefaultValue(ApprovalType.Waiting)]
+        public ApprovalType Approval { get; set; }
     }
 }

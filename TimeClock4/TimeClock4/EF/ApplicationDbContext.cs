@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TimeClock4.Entity;
 
 namespace TimeClock4.EF
@@ -11,7 +7,8 @@ namespace TimeClock4.EF
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Vacation> Vacations { get; set; }
-
+        public DbSet<TimeSheet> TimeSheets { get; set; }
+        public DbSet<ClockIn> ClockIns { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

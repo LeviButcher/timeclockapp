@@ -1,0 +1,14 @@
+﻿@model ClockInRedirectViewModel
+
+@{
+
+}
+
+@if (Model.In)
+{
+    <h2>You Clock in At @Model.Time</h2>
+}
+else
+{
+    <h2>You Clocked out At @Model.Time</h2>
+}

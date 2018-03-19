@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using TimeClock4.EF;
-using TimeClock4.Entity;
 
 namespace TimeClock4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180313171108_AddingSupervisorsToUser")]
+    partial class AddingSupervisorsToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,13 +144,9 @@ namespace TimeClock4.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<bool>("ExemptFromOvertime");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50);
-
-                    b.Property<double>("HourlyWage");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -196,63 +192,10 @@ namespace TimeClock4.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TimeClock4.Entity.ClockIn", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("ClockInTime");
-
-                    b.Property<DateTime?>("ClockOutTime");
-
-                    b.Property<int>("TimeSheetId");
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TimeSheetId");
-
-                    b.ToTable("ClockIns");
-                });
-
-            modelBuilder.Entity("TimeClock4.Entity.TimeSheet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Approved");
-
-                    b.Property<DateTime>("EndDate");
-
-                    b.Property<bool>("ExemptFromOvertime");
-
-                    b.Property<string>("ReasonDenied");
-
-                    b.Property<DateTime>("StartDate");
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("TimeSheets");
-                });
-
             modelBuilder.Entity("TimeClock4.Entity.Vacation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Approval");
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
@@ -332,22 +275,6 @@ namespace TimeClock4.Migrations
                     b.HasOne("TimeClock4.Entity.ApplicationUser", "Supervisor")
                         .WithMany("Employees")
                         .HasForeignKey("SupervisorId");
-                });
-
-            modelBuilder.Entity("TimeClock4.Entity.ClockIn", b =>
-                {
-                    b.HasOne("TimeClock4.Entity.TimeSheet", "TimeSheet")
-                        .WithMany("ClockIns")
-                        .HasForeignKey("TimeSheetId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TimeClock4.Entity.TimeSheet", b =>
-                {
-                    b.HasOne("TimeClock4.Entity.ApplicationUser", "User")
-                        .WithMany("TimeSheets")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TimeClock4.Entity.Vacation", b =>
