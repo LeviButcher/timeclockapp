@@ -86,5 +86,30 @@ namespace TimeClock4.Initializers
             }
 
         }
+
+        public  async void SeedData()
+        {
+            var defaultPassword = "develop@90";
+
+            //Create Default User
+            ApplicationUser user1 = new ApplicationUser { FirstName = "Levi", LastName = "Butcher", Email = "Lbutt@develop.com", HourlyWage = 10.00, UserName = "Lbutt@develop.com" };
+            await _userManager.CreateAsync(user1, defaultPassword);
+            ApplicationUser user2 = new ApplicationUser { FirstName = "Bobby", LastName = "Tables", Email = "tables@develop.com", HourlyWage =  11.00, UserName = "tables@develop.com", Supervisor = user1 };
+            await _userManager.CreateAsync(user2, defaultPassword);
+            ApplicationUser user3 = new ApplicationUser { FirstName = "Sarah", LastName = "Sarahhaha", Email = "sarahhaha@develop.com", HourlyWage = 8.95, UserName = "sarahhaha@develop.com", Supervisor = user1 };
+            await _userManager.CreateAsync(user3, defaultPassword);
+            ApplicationUser user4 = new ApplicationUser { FirstName = "Rooky", LastName = "Rooky", Email = "rooky@develop.com", HourlyWage = 12.00, UserName = "rooky@develop.com", Supervisor = user1 };
+            await _userManager.CreateAsync(user4, defaultPassword);
+
+            //Add Users to Roles
+            await _userManager.AddToRoleAsync(user1, "Supervisor");
+            await _userManager.AddToRoleAsync(user2, "BasicUser");
+            await _userManager.AddToRoleAsync(user3, "BasicUser");
+            await _userManager.AddToRoleAsync(user4, "BasicUser");
+
+            //user2 Timesheets
+            
+
+        }
     }
 }

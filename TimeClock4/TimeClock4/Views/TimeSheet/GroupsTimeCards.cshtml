@@ -67,7 +67,7 @@
             </td>
             <td>
                 @Html.HiddenFor(modelItem => item.TimesheetId)
-                <a asp-action="DetailTimeSheet" asp-route-id="@item.TimesheetId">Payroll Check</a>
+                <a asp-action="CheckForTimesheet" asp-route-id="@item.TimesheetId">Payroll Check</a>
             </td>
         </tr>
 }

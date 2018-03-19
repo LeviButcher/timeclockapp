@@ -404,7 +404,7 @@ namespace TimeClock4.Controllers
         [Authorize(Roles = "Payroll")]
         public IActionResult GroupsWeekReport(DateTime startDate, DateTime endDate)
         {
-            var timesheets = _context.TimeSheets.Where(x => x.StartDate == startDate && x.EndDate == endDate)
+            var timesheets = _context.TimeSheets.Where(x => x.StartDate == startDate && x.EndDate == endDate && x.User.SupervisorId != null)
                 .Include(x => x.User);
             var report = new List<GroupWeekReportViewModel>();
             var groups = timesheets.ToLookup(x => x.User.SupervisorId).OrderBy(x => x.Key);
@@ -424,7 +424,6 @@ namespace TimeClock4.Controllers
                     StartDate = group.First().StartDate,
                     EndDate = group.First().EndDate,
                     TotalEarning = GetWeeklyGroupEarnings(group.First().StartDate, group.First().EndDate, group.Key) 
-
                 });
             }
 
@@ -442,7 +441,7 @@ namespace TimeClock4.Controllers
             foreach (var timesheet in timesheets)
             {
                 var timeworked = TimeSheetTimeSpent(timesheet);
-                var amountMade = TimeSheetTimeSpent(timesheet);
+                var amountMade = TimeSheetAmountMade(timesheet, timeworked);
 
                 groupsTimeCards.Add(new PayrollTimesheetDetailViewModel
                 {
@@ -464,9 +463,29 @@ namespace TimeClock4.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Payroll")]
+        public IActionResult CheckForTimesheet(int id)
+        {
+            var timesheet = _context.TimeSheets.Include(x => x.User).Where(x => x.Id == id).First();
+            var timeworked = TimeSheetTimeSpent(timesheet);
+            var amountMade = TimeSheetAmountMade(timesheet, timeworked);
+
+            var viewModel = new PayrollTimesheetDetailViewModel
+            {
+                User = timesheet.User.FirstName + " " + timesheet.User.LastName,
+                AmountMade = amountMade,
+                TimeWorked = timeworked,
+                StartDate = timesheet.StartDate,
+                EndDate = timesheet.EndDate
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Payroll")]
         public IActionResult AllPendingTimesheets()
         {
-            var timesheets = _context.TimeSheets.Where(x => x.Approved == ApprovalType.Waiting).Include(x => x.User).ThenInclude(x => x.Supervisor);
+            var timesheets = _context.TimeSheets.Where(x => x.Approved == ApprovalType.Waiting && x.User.SupervisorId != null).Include(x => x.User).ThenInclude(x => x.Supervisor);
 
             var pendings = new List<PayrollTimesheetDetailViewModel>();
 

@@ -22,14 +22,13 @@
                 @if (Model.CurrentlyClockedIn)
                 {
                     <h2>You are currently clocked in, Clock Out</h2>
-                    <input type="submit" name="Submit" value="Clock Out" asp-route-In="@false" class="btn btn-danger" } />
+                    <input type="submit" name="Submit" value="Clock Out" asp-route-In="@false" class="btn btn-danger" />
 
                 }
                 else
                 {
-                    @Model.CurrentlyClockedIn
                     <h2>You are not currently clocked in, Clock In</h2>
-                    <input type="submit" name="Submit" value="Clock In" asp-route-In="@true" class="btn btn-primary" } />
+                    <input type="submit" name="Submit" value="Clock In" asp-route-In="@true" class="btn btn-primary" />
                 }
             </div>
             @Html.HiddenFor(x => x.TimeSheetId)
