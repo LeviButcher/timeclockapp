@@ -41,6 +41,11 @@ namespace TimeClock4.Controllers
         [HttpGet]
         public IActionResult ClockIn()
         {
+            if (User.IsInRole("Administrator") || User.IsInRole("Payroll"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var user = _userManager.FindByNameAsync(User.Identity.Name).GetAwaiter().GetResult();
             var timeSheet = FindTimeSheet(user.Id);
             ClockIn clockIn = null;
