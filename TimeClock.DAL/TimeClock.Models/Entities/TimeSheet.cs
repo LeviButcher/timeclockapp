@@ -10,12 +10,6 @@ namespace TimeClock.Models.Entities
     [Table("TimeSheets", Schema = "Clock")]
     public class TimeSheet : EntityBase
     {
-
-        public bool? Approved { get; set; }
-
-        [DataType(DataType.MultilineText)]
-        public string ReasonDenied { get; set; }
-
         [Required]
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
@@ -23,8 +17,16 @@ namespace TimeClock.Models.Entities
         [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
 
-        //Start navigation props
+        //For Overtime
+        [Required]
+        public bool Exempt { get; set; }
 
+
+        [NotMapped]
+        [DataType(DataType.Currency)]
+        public double TotalPay;
+        //Start navigation props
+        [Required]
         public string EmployeeId { get; set; }
 
         [ForeignKey(nameof(EmployeeId))]
@@ -32,5 +34,12 @@ namespace TimeClock.Models.Entities
 
         [InverseProperty(nameof(ClockIn.TimeSheet))]
         public List<ClockIn> ClockIns { get; set; }
+
+
+        public int? ApprovalId { get; set; }
+
+        [ForeignKey(nameof(ApprovalId))]
+        public Approval Approval { get; set; }
+
     }
 }

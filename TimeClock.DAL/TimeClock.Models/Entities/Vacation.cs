@@ -18,14 +18,20 @@ namespace TimeClock.Models.Entities
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
 
-        //Not required
-        public bool Approved { get; set; }
-
         [DataType(DataType.Date)]
         public DateTime DateCreated { get; set; }
 
+        [MaxLength(300)]
+        public string Reasoning { get; set; }
+
         //Start Navigation and keys
 
+        public int? ApprovalId { get; set; }
+
+        [ForeignKey(nameof(ApprovalId))]
+        public Approval Approval { get; set; }
+
+        [Required]
         public string EmployeeId { get; set; }
 
         [ForeignKey(nameof(EmployeeId))]

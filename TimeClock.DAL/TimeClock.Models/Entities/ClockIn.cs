@@ -16,7 +16,29 @@ namespace TimeClock.Models.Entities
         public DateTime ClockInTime { get; set; }
 
         [DataType(DataType.DateTime)]
-        public DateTime? ClockOutTime {get; set;}
+        public DateTime? ClockOutTime { get; set; }
+
+        //Add Difference bettwen Clock out and clock in
+        public double TimeClockedIn
+        {
+            get
+            {
+                //need to find a way to return this if possible
+                if(ClockOutTime != null)
+                {
+                    TimeSpan timespent;
+                    var start = ClockInTime;
+                    var end = ClockOutTime;
+                    timespent.Add(end - start);
+                    return timespent.TotalMinutes;
+                }
+                return 0;
+            }
+        }
+
+        //Add Amount earned for shift
+
+        public double? AmountEarned => TimeClockedIn * Wage.HourlyWage;
 
         //Start navigation props
 
@@ -24,5 +46,10 @@ namespace TimeClock.Models.Entities
 
         [ForeignKey(nameof(TimeSheetId))]
         public TimeSheet TimeSheet { get; set; }
+
+        public int WageId { get; set; }
+
+        [ForeignKey(nameof(WageId))]
+        public Wage Wage {get;set;}
     }
 }

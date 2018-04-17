@@ -11,9 +11,10 @@ using TimeClock.DAL.EF;
 namespace TimeClock.DAL.Migrations
 {
     [DbContext(typeof(ClockContext))]
-    partial class ClockContextModelSnapshot : ModelSnapshot
+    [Migration("20180417212101_vacationApproval")]
+    partial class vacationApproval
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

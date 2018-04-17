@@ -8,6 +8,13 @@ namespace TimeClock.DAL.EF
 {
     public class ClockContext : IdentityDbContext<Employee, IdentityRole, string>
     {
+        DbSet<Employee> Employees { get; set; }
+        DbSet<Wage> Wages { get; set; }
+        DbSet<Vacation> Vacations { get; set; }
+        DbSet<TimeSheet> TimeSheets { get; set; }
+        DbSet<ClockIn> ClockIns { get; set; }
+        DbSet<Approval> Approvals { get; set; }
+
         public ClockContext()
         {
 
@@ -62,9 +69,6 @@ namespace TimeClock.DAL.EF
 
         }
 
-        DbSet<Employee> Employees { get; set; }
-        DbSet<Vacation> Vacations { get; set; }
-        DbSet<TimeSheet> TimeSheets { get; set; }
-        DbSet<ClockIn> ClockIns { get; set; }
+       
     }
 }

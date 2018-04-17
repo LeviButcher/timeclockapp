@@ -11,9 +11,10 @@ using TimeClock.DAL.EF;
 namespace TimeClock.DAL.Migrations
 {
     [DbContext(typeof(ClockContext))]
-    partial class ClockContextModelSnapshot : ModelSnapshot
+    [Migration("20180417211203_StatusAndApproval")]
+    partial class StatusAndApproval
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -317,15 +318,14 @@ namespace TimeClock.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ApprovalId");
+                    b.Property<bool>("Approved");
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<string>("EmployeeId")
-                        .IsRequired();
+                    b.Property<string>("EmployeeId");
 
                     b.Property<DateTime>("EndDate");
 
@@ -336,10 +336,6 @@ namespace TimeClock.DAL.Migrations
                         .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApprovalId")
-                        .IsUnique()
-                        .HasFilter("[ApprovalId] IS NOT NULL");
 
                     b.HasIndex("EmployeeId");
 
@@ -394,7 +390,7 @@ namespace TimeClock.DAL.Migrations
             modelBuilder.Entity("TimeClock.Models.Entities.Approval", b =>
                 {
                     b.HasOne("TimeClock.Models.Entities.Employee", "Supervisor")
-                        .WithMany("Approvals")
+                        .WithMany()
                         .HasForeignKey("SupervisorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -431,14 +427,9 @@ namespace TimeClock.DAL.Migrations
 
             modelBuilder.Entity("TimeClock.Models.Entities.Vacation", b =>
                 {
-                    b.HasOne("TimeClock.Models.Entities.Approval", "Approval")
-                        .WithOne("VacationApproval")
-                        .HasForeignKey("TimeClock.Models.Entities.Vacation", "ApprovalId");
-
                     b.HasOne("TimeClock.Models.Entities.Employee", "Employee")
                         .WithMany("Vacations")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EmployeeId");
                 });
 #pragma warning restore 612, 618
         }

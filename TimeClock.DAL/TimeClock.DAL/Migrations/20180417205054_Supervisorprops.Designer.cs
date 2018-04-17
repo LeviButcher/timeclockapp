@@ -11,9 +11,10 @@ using TimeClock.DAL.EF;
 namespace TimeClock.DAL.Migrations
 {
     [DbContext(typeof(ClockContext))]
-    partial class ClockContextModelSnapshot : ModelSnapshot
+    [Migration("20180417205054_Supervisorprops")]
+    partial class Supervisorprops
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,30 +129,6 @@ namespace TimeClock.DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TimeClock.Models.Entities.Approval", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AdditionalComments")
-                        .HasMaxLength(250);
-
-                    b.Property<bool>("Approved");
-
-                    b.Property<string>("SupervisorId")
-                        .IsRequired();
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.ToTable("Approvals","Clock");
-                });
-
             modelBuilder.Entity("TimeClock.Models.Entities.ClockIn", b =>
                 {
                     b.Property<int>("Id")
@@ -201,6 +178,8 @@ namespace TimeClock.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<float>("HourlyWage");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50);
@@ -245,44 +224,6 @@ namespace TimeClock.DAL.Migrations
                     b.ToTable("AspNetUsers","Clock");
                 });
 
-            modelBuilder.Entity("TimeClock.Models.Entities.EmployeeWage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("EmployeeId")
-                        .IsRequired();
-
-                    b.Property<float>("HourlyWage");
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Wages","Clock");
-                });
-
-            modelBuilder.Entity("TimeClock.Models.Entities.Status", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("StatusName")
-                        .IsRequired();
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Statuses","Clock");
-                });
-
             modelBuilder.Entity("TimeClock.Models.Entities.TimeSheet", b =>
                 {
                     b.Property<int>("Id")
@@ -317,15 +258,14 @@ namespace TimeClock.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ApprovalId");
+                    b.Property<bool>("Approved");
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<string>("EmployeeId")
-                        .IsRequired();
+                    b.Property<string>("EmployeeId");
 
                     b.Property<DateTime>("EndDate");
 
@@ -336,10 +276,6 @@ namespace TimeClock.DAL.Migrations
                         .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApprovalId")
-                        .IsUnique()
-                        .HasFilter("[ApprovalId] IS NOT NULL");
 
                     b.HasIndex("EmployeeId");
 
@@ -391,14 +327,6 @@ namespace TimeClock.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TimeClock.Models.Entities.Approval", b =>
-                {
-                    b.HasOne("TimeClock.Models.Entities.Employee", "Supervisor")
-                        .WithMany("Approvals")
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("TimeClock.Models.Entities.ClockIn", b =>
                 {
                     b.HasOne("TimeClock.Models.Entities.TimeSheet", "TimeSheet")
@@ -414,14 +342,6 @@ namespace TimeClock.DAL.Migrations
                         .HasForeignKey("SupervisorId");
                 });
 
-            modelBuilder.Entity("TimeClock.Models.Entities.EmployeeWage", b =>
-                {
-                    b.HasOne("TimeClock.Models.Entities.Employee", "Employee")
-                        .WithMany("Wages")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("TimeClock.Models.Entities.TimeSheet", b =>
                 {
                     b.HasOne("TimeClock.Models.Entities.Employee", "Employee")
@@ -431,14 +351,9 @@ namespace TimeClock.DAL.Migrations
 
             modelBuilder.Entity("TimeClock.Models.Entities.Vacation", b =>
                 {
-                    b.HasOne("TimeClock.Models.Entities.Approval", "Approval")
-                        .WithOne("VacationApproval")
-                        .HasForeignKey("TimeClock.Models.Entities.Vacation", "ApprovalId");
-
                     b.HasOne("TimeClock.Models.Entities.Employee", "Employee")
                         .WithMany("Vacations")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EmployeeId");
                 });
 #pragma warning restore 612, 618
         }
